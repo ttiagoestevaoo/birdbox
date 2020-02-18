@@ -13,7 +13,7 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 ## Ferramentas e bibliotecas
 
-Abaixo contém tudo que é utilizado para contribuir ao sistema.
+Abaixo contém tudo que foi utilizado para contribuir ao sistema.
 
 - Testes unitários com PHPUnit
 - Tailwind CSS
