@@ -7,7 +7,7 @@ Um sistema para acompanhar seus projetos, criar tarefas para eles e definir praz
 
 - Criar tarefas
 - Criar projetos
-- Definir prazos (EM DSENVOLVIMENTO)
+- Definir prazos (EM DESENVOLVIMENTO)
 - Convidar pessoas a acompanhar o projeto (EM DSENVOLVIMENTO)
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
