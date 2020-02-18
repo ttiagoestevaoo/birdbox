@@ -15,5 +15,15 @@ use RefreshDatabase;
     $project = factory('App\Project')->create();
      $this->assertEquals('/projects/' . $project->id,$project->path());
  }
- 
+
+ /** @test */
+ public function it_belongs_to()
+ {
+
+    $project = factory('App\Project')->create();
+
+    $this->assertInstanceOf('App\User',$project->user);
+ }
+
+
 }

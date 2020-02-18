@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Tests\TestCase;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserTest extends TestCase
 {
