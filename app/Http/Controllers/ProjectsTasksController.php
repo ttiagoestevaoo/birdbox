@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Task;
 use Illuminate\Http\Request;
 
-class ProjectsController extends Controller
+class ProjectsTasksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +15,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = auth()->user()->projects;
-
-
-        return view('projects.index',compact('projects'));
+        //
     }
 
     /**
@@ -27,7 +25,7 @@ class ProjectsController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        //
     }
 
     /**
@@ -36,19 +34,15 @@ class ProjectsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Project $project)
     {
-        
-        $atributtes = request()->validate([
-            'title'=>'required',
-            'description'=>'required',
-            'notes' => 'min:3'
-        ]);
-        $atributtes['user_id'] = auth()->id();
+        if(auth()->user()->isNot($project->user)){
+            abort(403);
+        }
+        request()->validate(['body' => 'required']);
+        $project->addTask(request('body'));
 
-        $project = auth()->user()->projects()->create($atributtes);
-        
-        return redirect($project ->path());
+        return redirect($project->path());
     }
 
     /**
@@ -59,10 +53,7 @@ class ProjectsController extends Controller
      */
     public function show(Project $project)
     {
-        if(auth()->user()->isNot($project->user)){
-            abort(403);
-        }
-        return view('projects.show',compact('project'));
+        //
     }
 
     /**
@@ -83,14 +74,14 @@ class ProjectsController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update( Project $project, Task $task)
     {
-        if(auth()->user()->isNot($project->user)){
+        if(auth()->user()->isNot($task->project->user)){
             abort(403);
         }
-
-        $project->update([            
-            'notes' => request('notes')
+        $task ->update([
+            'body' => request('body'),
+            'completed' => request()->has('completed')
         ]);
 
         return redirect($project->path());

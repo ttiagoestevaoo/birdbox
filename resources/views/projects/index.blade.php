@@ -1,22 +1,23 @@
-<!DOCTYPE html>
-<html lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Title Page</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.css"/>
-    </head>
-    <body>
-        <h1>Birdbox</h1>
+@extends('layouts.app')
 
-        <ul>
-            @foreach($projects as $project)
-                <h1><a href="{{$project->path()}}">{{$project['title']}}</h1></a>
-                <p>{{$project['description']}}</p>
+@section('content')
+    <header class="flex items-center mb-3 w-full py-4">    
+        <h1 class="mr-auto">My projects</h1>
+        <a href="/projects/create" class="btn-blue">Add project</a>
+    </header>
 
-            @endforeach
-        </ul>
-        
-    </body>
-</html>
+    <main class="flex flex-wrap justify-start sm:-mx-3 mx-3 ">
+        @forelse($projects as $project)
+            <div class="w-full sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 px-3 pb-6 " >
+
+                @include('projects.card')
+            </div>
+        @empty
+            <p>No projects yet.</p>
+        @endforelse
+    </main>
+            
+
+    
+   
+@endsection

@@ -25,5 +25,16 @@ use RefreshDatabase;
     $this->assertInstanceOf('App\User',$project->user);
  }
 
+/** @test */
+ public function it_can_add_a_task()
+ {
+   $project = factory('App\Project')->create();
+
+   $task = $project-> addTask('Lorem ipsum');
+
+   
+   $this-> assertTrue($project->tasks->contains($task));
+ }
+
 
 }

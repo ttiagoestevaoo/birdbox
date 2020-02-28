@@ -1,0 +1,4 @@
+.card{
+    @apply bg-white p-5 rounded shadow-md;
+    
+}

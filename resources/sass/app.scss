@@ -5,4 +5,17 @@
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+/* Small (sm) */
+
+/* Medium (md) */
+
+
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import 'button';
+@import 'card';
+
+@import "tailwindcss/utilities";
+
