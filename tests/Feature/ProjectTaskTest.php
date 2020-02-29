@@ -6,6 +6,8 @@ use App\Project;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Facades\Tests\Setup\ProjectFactory;
+
 use Tests\TestCase;
 
 class ProjectTaskTest extends TestCase
@@ -17,9 +19,9 @@ class ProjectTaskTest extends TestCase
     {
         $this-> withoutExceptionHandling();
 
-        $this->singIn();
+        $project = ProjectFactory::ownedBy($this->singIn())->create();
 
-        $project = factory(Project::class)->create(['user_id' => auth()->id()]);
+
 
         $this->post($project->path() . '/tasks', ['body' =>'Lorem ipsum task']);
         $this->get($project->path())->assertSee('Lorem ipsum task');
@@ -28,13 +30,8 @@ class ProjectTaskTest extends TestCase
     /** @test */
     public function a_task_requires_a_body()
     {
-        
+        $project= ProjectFactory::ownedBY($this->singIn()) ->create();
 
-        $this->singIn();
-        
-        $project = factory(Project::class)->create(['user_id' => auth()->id()]);
-
-        
         $atributtes = factory('App\Task')->raw(['body' => '']);
 
         $this->post($project->path().'/tasks',$atributtes)->assertSessionHasErrors('body');
@@ -45,8 +42,7 @@ class ProjectTaskTest extends TestCase
     {
         $this->singIn();
 
-        $project= factory('App\Project')->create();
-
+        $project= ProjectFactory::create();
         $this->post($project->path().'/tasks',['body' => 'Lorem ipsum'])->assertStatus(403);
 
     }
@@ -56,11 +52,9 @@ class ProjectTaskTest extends TestCase
     {
         $this->singIn();
 
-        $project= factory('App\Project')->create();
+        $project= ProjectFactory::withTasks(1) ->create();
 
-        $task  = $project->addTask('Tasks');
-
-        $this->patch($task->path(),[
+        $this->patch($project->tasks->first()->path(),[
             'body' => 'changed',
             'completed' =>  true
         ])->assertStatus(403);
@@ -80,11 +74,10 @@ class ProjectTaskTest extends TestCase
     {
         $this-> withoutExceptionHandling();
 
-        $this->singIn();
-        $project= factory('App\Project')->create(['user_id' => auth()->id()]);
-        $task  = $project->addTask('Tasks');
+        $project = ProjectFactory::withTasks(1)->create();        
 
-        $this->patch($task->path(),[
+        $this->actingAs($project->user)
+        ->patch($project->tasks->first()->path(),[
             'body' => 'changed',
             'completed' =>  true
         ]);

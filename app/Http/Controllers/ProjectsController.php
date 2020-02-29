@@ -44,7 +44,7 @@ class ProjectsController extends Controller
             'description'=>'required',
             'notes' => 'min:3'
         ]);
-        $atributtes['user_id'] = auth()->id();
+        
 
         $project = auth()->user()->projects()->create($atributtes);
         
@@ -59,9 +59,8 @@ class ProjectsController extends Controller
      */
     public function show(Project $project)
     {
-        if(auth()->user()->isNot($project->user)){
-            abort(403);
-        }
+        $this->authorize('userProject',$project);
+
         return view('projects.show',compact('project'));
     }
 
@@ -85,13 +84,9 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        if(auth()->user()->isNot($project->user)){
-            abort(403);
-        }
+        $this->authorize('userProject',$project);
 
-        $project->update([            
-            'notes' => request('notes')
-        ]);
+        $project->update(request(['notes']));
 
         return redirect($project->path());
     }

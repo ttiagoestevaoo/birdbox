@@ -42,9 +42,9 @@
                 @csrf
                 @method("PATCH")
                 
-                <textarea class="card w-full" style="min-height:200px">{{$project->notes}}</textarea>
-                <button type="submit" class="button">Enviar</button>
-            </form>    
+                <textarea name="notes" class="card w-full" style="min-height:200px">{{$project->notes}}</textarea>
+                <button type="submit" class="btn-blue">Enviar</button>
+                </form>    
             </div>
         </div>
         <div class="px-3 lg:w-1/4">
