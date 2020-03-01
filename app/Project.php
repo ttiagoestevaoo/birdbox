@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Task;
+use App\Activity;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Tests\Feature\ActivityFeedTest;
 
 class Project extends Model
 {
@@ -32,4 +35,8 @@ class Project extends Model
         return $this->tasks()->create(compact('body'));
     }
     
+    public function activity()
+    {
+       return $this->hasMany(Activity::class);
+    }
 }
