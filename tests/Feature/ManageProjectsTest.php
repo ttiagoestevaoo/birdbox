@@ -37,14 +37,19 @@ class ManageProjectsTest extends TestCase
         ->assertSee($atributtes['notes'])
         ->assertSee($atributtes['description']);
         
-        $this->patch($project->path(),[            
-            'notes' =>  'changed'
-        ]);
-        $this->assertDatabaseHas('projects',[
-            'notes' =>  'changed'
-        ]);
     }
 
+    /** @test */
+    public function a_user_can_update_general_notes()
+    {
+        $project = ProjectFactory::create();
+
+        $this->actingAs($project->user)
+        ->patch($project->path(),$atributtes = [
+            "notes" =>  'changed'
+        ]);
+        $this->assertDatabaseHas('projects',$atributtes);
+    }
     /** @test */
     public function a_user_can_update_a_project()
     {
@@ -52,8 +57,12 @@ class ManageProjectsTest extends TestCase
 
         $this->actingAs($project->user)
         ->patch($project->path(),$atributtes = [
-            "notes" =>  'changed']);
+            "notes" =>  'changed',
+            "description" =>  'changed',
+            "title" =>  'changed'
+        ]);
         $this->assertDatabaseHas('projects',$atributtes);
+        $this->get($project->path()."/edit")->assertOK();
     }
     
     /** @test */

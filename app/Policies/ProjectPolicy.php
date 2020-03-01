@@ -20,7 +20,7 @@ class ProjectPolicy
         //
     }
 
-    public function userProject(USer $user, Project $project)
+    public function userProject(User $user, Project $project)
     {
         return $user->is($project->user);
     }
