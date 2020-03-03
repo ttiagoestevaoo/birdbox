@@ -8,7 +8,7 @@
 
     <main class="flex flex-wrap justify-start sm:-mx-3 mx-3 ">
         @forelse($projects as $project)
-            <div class="w-full sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 px-3 pb-6 " >
+            <div class="w-full sm:w-1/2  lg:w-1/3 xl:w-1/4 px-3 pb-6 " >
 
                 @include('projects.card')
             </div>

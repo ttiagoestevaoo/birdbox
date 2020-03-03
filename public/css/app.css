@@ -908,6 +908,39 @@ video {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
+.sidebar-item {
+  display: block;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.25rem;
+  vertical-align: middle;
+  color: #2d3748;
+  text-decoration: none;
+  border-bottom-width: 2px;
+  border-color: #2d3748;
+}
+
+.sidebar-item:hover {
+  color: #ed64a6;
+  border-color: #ed64a6;
+}
+
+.sidebar-text {
+  padding-bottom: 0.25rem;
+  font-size: 0.75rem;
+  font-size: 1rem;
+  color: #718096;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .sidebar-text {
+    display: inline-block;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
 .sr-only{
   position: absolute;
   width: 1px;
