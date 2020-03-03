@@ -9,12 +9,11 @@
     <a href="{{$project->path()."/edit"}}" class="btn-blue">Edit project</a>
 </header>
 
-<main class=" ">
-    <div class="lg:flex">
+<main class="lg:flex">
+    <div class="w-full">
 
         <div class="lg:w-3/4 px-3" >
             <div class="mb-6">
-
                 <h2 class="text-gray-500 font-normal text-lg">Tasks</h2>
                 @foreach ($project->tasks as $task)
                 <div class="card mb-3" >
@@ -36,7 +35,6 @@
             </form>
                 
             </div>
-            <div class="">
                 <h2 class="text-gray-500 font-normal text-lg">General notes</h2>
                 <form action="{{$project->path()}}" method="POST">
                     @csrf
@@ -44,21 +42,27 @@
                     
                     <textarea name="notes" class="card w-full mb-3" style="min-height:200px">{{$project->notes}}</textarea>
                     <button type="submit" class="btn-blue">Enviar</button>
+                    
+                </form>
+                <form action="{{$project->path()}}" method="POST" onsubmit="return confirm('Do you really want to delete the projetc?');">
+                    @method('DELETE')
+                    @csrf
+
+                    <button type="submit">Delete</button>
                 </form>    
             </div>
         </div>
-        <div class="field mt-5">
-            @if ($errors->any())
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-
-                @endforeach
-            @endif
-        </div>
         <div class="px-3 lg:w-1/4">
-            @include('projects.card')
-
+            @include('projects.card')        
         </div>
+    </div>
+    <div class="field mt-5">
+        @if ($errors->any())
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+
+            @endforeach
+        @endif
     </div>
 </main>
 @endsection

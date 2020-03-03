@@ -34,4 +34,27 @@ class ActivityFeedTest extends TestCase
         $this->assertEquals('updated',$project->activity[1]->description);
     }
 
+    /** @test */
+    public function creating_a_taks_generates_activity()
+    {
+        $this->withoutExceptionHandling();
+        $project = ProjectFactory::create();
+        $project->addTask('Some task');
+        $this->assertCount(2,$project->activity);
+        $this->assertEquals('created_task',$project->activity[1]->description);
+    }
+
+    
+    /** @test */
+    public function completing_a_taks_generates_activity()
+    {
+        $this->withoutExceptionHandling();
+        $project = ProjectFactory::withTasks(1)->create();
+        $this->actingAs($this->singIn($project->user))
+        ->patch($project->tasks[0]->path(), [
+            'body' => 'Teste',
+            'completed' => True
+        ]);
+        $this->assertCount(3,$project->activity);
+    }
 }
