@@ -10,12 +10,25 @@ use Tests\TestCase;
 class ManageTasksTest extends TestCase
 {
    use RefreshDatabase;
-   /** @test */
+   
    public function a_user_can_view_theirs_tasks()
    {
        $this->withoutExceptionHandling();
        $project = ProjectFactory::withTasks(1)->ownedBy($this->singIn())->create();
        $this->get('/tasks')->assertSee($project->tasks[0]->body);
+   }
+
+   
+   public function a_user_can_create_tasks()
+   {
+        $this->withoutExceptionHandling();
+
+        $this->actingAs($this->singIn())
+        ->post('/tasks',
+           $attributtes = ['body' => 'New task'
+       ]);
+
+       $this->get('/tasks')->assertSee($attributtes['body']);
    }
    
 }

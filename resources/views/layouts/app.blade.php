@@ -28,17 +28,18 @@
             <div class="relative mx-auto">
                 <ul class="list-reset flex flex-row md:flex-col text-center md:text-left">
                     <li class="mr-3 flex-1">
-                        <a href="#" class="sidebar-item">
+                        <a href="#" class="sidebar-item {{ request()->routeIs('agenda') ? 'active' : '' }}">
                         <i class="fas fa-link pr-0 md:pr-3"></i><span class="sidebar-text">Agenda</span>
                         </a>
                     </li>
                     <li class="mr-3 flex-1">
-                        <a href="/projects" class="sidebar-item">
+                        <a href="/projects" class="sidebar-item {{ request()->routeIs('projects') ? 'active' : '' }}">
+                       
                         <i class="fas fa-link pr-0 md:pr-3"></i><span class="sidebar-text">Projects</span>
                         </a>
                     </li>
                     <li class="mr-3 flex-1">
-                        <a href="/tasks" class="sidebar-item">
+                        <a href="/tasks" class="sidebar-item {{ request()->routeIs('tasks') ? 'active' : '' }}">
                         <i class="fas fa-link pr-0 md:pr-3 text-pink-500"></i><span class="sidebar-text">Tasks</span>
                         </a>
                     </li>

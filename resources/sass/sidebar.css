@@ -4,7 +4,9 @@
 .sidebar-item:hover {
    @apply text-pink-500 border-pink-500
 }
-
+.active {
+   @apply border-pink-800 
+}
 .sidebar-text {
     @apply pb-1  text-xs text-base text-gray-600  block ;
 }

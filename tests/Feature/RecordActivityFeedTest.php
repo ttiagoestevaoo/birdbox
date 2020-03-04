@@ -7,14 +7,14 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Facades\Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 
-class ActivityFeedTest extends TestCase
+class RecordActivityFeedTest extends TestCase
 {
     use RefreshDatabase;
 
     
     
     /** @test */
-    public function creating_a_project_generates_activity()
+    public function creating_a_project()
     {
         $this->withoutExceptionHandling();
         $project = ProjectFactory::create();
@@ -24,7 +24,7 @@ class ActivityFeedTest extends TestCase
     }
     
     /** @test */
-    public function update_a_project_generates_activity()
+    public function update_a_project()
     {
         $this->withoutExceptionHandling();
         $project = ProjectFactory::create();
@@ -35,18 +35,18 @@ class ActivityFeedTest extends TestCase
     }
 
     /** @test */
-    public function creating_a_taks_generates_activity()
+    public function creating_a_taks()
     {
         $this->withoutExceptionHandling();
-        $project = ProjectFactory::create();
-        $project->addTask('Some task');
+        $project = ProjectFactory::withTasks(1)->create();
+    ;
         $this->assertCount(2,$project->activity);
         $this->assertEquals('created_task',$project->activity[1]->description);
     }
 
     
     /** @test */
-    public function completing_a_taks_generates_activity()
+    public function completing_a_taks()
     {
         $this->withoutExceptionHandling();
         $project = ProjectFactory::withTasks(1)->create();
@@ -56,5 +56,6 @@ class ActivityFeedTest extends TestCase
             'completed' => True
         ]);
         $this->assertCount(3,$project->activity);
+        $this->assertEquals($project->activity[2]->description, 'completed_task');
     }
 }

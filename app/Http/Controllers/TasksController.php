@@ -39,7 +39,9 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = auth()->user()->tasks()->create(
+         ['body' => request('body')
+         ]);
     }
 
     /**

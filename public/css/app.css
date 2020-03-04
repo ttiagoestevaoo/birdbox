@@ -925,6 +925,10 @@ video {
   border-color: #ed64a6;
 }
 
+.active {
+  border-color: #97266d;
+}
+
 .sidebar-text {
   padding-bottom: 0.25rem;
   font-size: 0.75rem;
