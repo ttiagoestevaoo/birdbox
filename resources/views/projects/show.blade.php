@@ -53,7 +53,8 @@
             </div>
         </div>
         <div class="px-3 lg:w-1/4">
-            @include('projects.card')        
+            @include('projects.card')
+            @include('projects.activity.card')
         </div>
     </div>
     <div class="field mt-5">
@@ -64,6 +65,8 @@
             @endforeach
         @endif
     </div>
+
+
 </main>
 @endsection
 

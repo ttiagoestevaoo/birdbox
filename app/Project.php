@@ -8,12 +8,13 @@ use App\Task;
 use App\Activity;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Tests\Feature\ActivityFeedTest;
+Use App\RecordActivity;
 
 class Project extends Model
 {
+    use RecordActivity;
     public $fillable=['title','description','user_id','notes'];
-
-    
+ 
 
     public function path()
     {
@@ -34,11 +35,7 @@ class Project extends Model
     {
         $task = $this->tasks()->create(compact('body'));
 
-        Activity::create([
-            'project_id' => $this->id,
-            'description' => 'created_task'
-        ]);
-
+      
         return $task;
     }
     
@@ -47,8 +44,4 @@ class Project extends Model
        return $this->hasMany(Activity::class);
     } 
     
-    public function recordActivity($description)
-    {
-        $this->activity()->create(['description' => $description]);
-    }
 }

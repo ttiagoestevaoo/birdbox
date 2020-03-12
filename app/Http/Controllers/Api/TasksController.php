@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Project;
+use App\Http\Controllers\Controller;
 use App\Task;
 use Illuminate\Http\Request;
 
-class ProjectsTasksController extends Controller
+class TasksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,23 +34,18 @@ class ProjectsTasksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Project $project)
+    public function store(Request $request)
     {
-        $this->authorize('userProject',$project);
-
-        request()->validate(['body' => 'required']);
-        $project->addTask(request('body'));
-
-        return redirect($project->path());
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Project  $project
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show(Task $task)
     {
         //
     }
@@ -58,10 +53,10 @@ class ProjectsTasksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Project  $project
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit(Project $project)
+    public function edit(Task $task)
     {
         //
     }
@@ -70,30 +65,21 @@ class ProjectsTasksController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Project  $project
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update( Project $project, Task $task)
+    public function update(Request $request, Task $task)
     {
-        $this->authorize('userProject',$project);
-
-        $task ->update([
-            'body' => request('body'),
-        ]);
-        
-        request('completed') ? $task->complete() : $task->incomplete();
-
-
-        return redirect($project->path());
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Project  $project
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy(Task $task)
     {
         //
     }

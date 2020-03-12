@@ -20,8 +20,8 @@ class UserTest extends TestCase
 
     }
 
-    /** @test */
-    public function a_user_has_tests()
+   
+    public function a_user_has_tasks()
     {
         $user = factory('App\User')->create();
 
