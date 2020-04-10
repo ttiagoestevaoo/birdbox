@@ -1,4 +1,4 @@
-// Fonts
+
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
@@ -14,9 +14,13 @@
 
 @import "tailwindcss/components";
 
-@import 'button';
-@import 'card';
-@import 'sidebar';
+@import 'themes/dark';
+@import 'themes/light';
+
+@import 'components/card';
+@import 'components/sidebar';
+
+@import 'components/button';
+
 
 @import "tailwindcss/utilities";
-

@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Project;
+use Facades\Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -30,5 +32,27 @@ class UserTest extends TestCase
 
     }
     
+    /** @test */
+    public function a_user_has_accessible_projects()
+    {
+        $john = $this->singIn();
+
+        $project = ProjectFactory::ownedBy($john)->create();
+
+        $this->assertCount(1, $john->accessibleProjects());
+
+        $sally = factory('App\User')->create();        
+        $nick = factory('App\User')->create();
+
+        $sallyProject =  ProjectFactory::ownedBy($sally)->create();
+        $sallyProject->invite($nick);
+
+        $this->assertCount(1, $john->accessibleProjects());
+
+        $sallyProject->invite($john);
+
+        $this->assertCount(2, $john->accessibleProjects());
+
+    }
     
 }

@@ -19,7 +19,7 @@
 
 
 <div class="control flex justify-between">
-    <button class="btn-blue">{{$button}}</button>    
+    <button class="button">{{$button}}</button>    
     <a href="/projects">Cancelar</a>        
 </div> 
 

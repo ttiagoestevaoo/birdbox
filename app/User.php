@@ -47,4 +47,12 @@ class User extends Authenticatable
         return $this->hasMany(Task::class);
     }
     
+    public function accessibleProjects()
+    {
+       return Project::where('user_id', $this->id)
+        ->orWhereHas('members', function($query){
+            $query->where('user_id', $this->id);
+        })
+        ->get();
+    }
 }

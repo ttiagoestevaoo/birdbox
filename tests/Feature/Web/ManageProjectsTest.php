@@ -14,25 +14,13 @@ class ManageProjectsTest extends TestCase
     
     /** @test*/
     public function a_user_can_create_a_project()
-    {
-        $this-> withoutExceptionHandling();
+    {    
         $this->singIn();
 
-        $this->get('/projects/create')->assertStatus(200);
-        
-        $atributtes = [
-            'title' => $this->faker->sentence,
-            'notes' => $this->faker->paragraph,           
-            'description' => $this->faker->sentence
+        $this->get('/projects/create')->assertStatus(200);      
 
-        ];
-
-        $response = $this->post('/projects',$atributtes);
-        $project = Project::where($atributtes)->first();
-        $response->assertRedirect($project->path());        
-        $this->assertDatabaseHas('projects',$atributtes);
-        
-        $this -> get($project->path())
+        $this->followingRedirects()
+        ->post('/projects',$atributtes = factory(Project::class)->raw())
         ->assertSee($atributtes['title'])
         ->assertSee($atributtes['notes'])
         ->assertSee($atributtes['description']);
@@ -72,13 +60,9 @@ class ManageProjectsTest extends TestCase
         $project = ProjectFactory::ownedBy($this->singIn())->create();
         $this->delete($project->path())->assertRedirect('/projects');
 
-        $atributtes = [
-            'notes' => $project->notes,
-            'description' => $project->description,
-            'title' => $project->title
-        ];
+        
 
-        $this->assertDatabaseMissing('projects',$atributtes);
+        $this->assertDatabaseMissing('projects',$project->only('id'));
     }
     /** @test */
     public function a_user_can_view_their_projects()
@@ -91,6 +75,17 @@ class ManageProjectsTest extends TestCase
         ->assertSee($project->title)
         ->assertSee($project->description)
         ->assertSee($project->notes);
+    }
+    
+    /** @test */
+    public function a_user_can_view_their_invited_projects()
+    {
+        $this->withoutExceptionHandling();
+        
+        $project = tap(ProjectFactory::create())->invite($this->singIn());
+        
+        $this->get('/projects')->assertSee($project->title);
+        
     }
     
 
@@ -137,16 +132,24 @@ class ManageProjectsTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_can_not_delete_others_projects()
+    public function anauthorized_users_cannot_delete_projects()
     {
-        $this->singIn();
-
+        
         $project = factory('App\Project')->create();
 
+        $this->delete($project->path(),$project->toArray())->assertRedirect('login');
+        
+        $user = $this->singIn();
         
         $this->delete($project->path())-> assertStatus(403);
 
+        $project->invite($user);
+
+        $this->actingAs($user)->delete($project->path())-> assertStatus(403);
+
     }
+
+    
     
     /** @test */
     public function an_authenticated_can_not_view_others_projects()

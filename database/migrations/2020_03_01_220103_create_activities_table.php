@@ -17,11 +17,14 @@ class CreateActivitiesTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('description');
             $table->text('changes')->nullable();
             $table->nullableMorphs('subject');
 
+
             $table->foreign('project_id')->references('id') ->on('projects')->onDelete('cascade');
+            $table->foreign('user_id')->references('id') ->on('users')->onDelete('cascade');
         });
     }
 

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <header class="flex items-center mb-3 w-full py-4">    
+    <header class="text-default flex items-center mb-3 w-full py-4">    
         <h1 class="mr-auto">My projects</h1>
-        <a href="/projects/create" class="btn-blue">Add project</a>
+        <a href="/projects/create" class="button">Add project</a>
     </header>
 
     <main class="flex flex-wrap justify-start sm:-mx-3 mx-3 ">

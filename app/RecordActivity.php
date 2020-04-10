@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+use Illuminate\Support\Facades\Auth;
+
 /**
  * 
  */
@@ -42,19 +44,24 @@ trait RecordActivity
         }
         return ['created','updated'];
     }
-   public function activity()
+    public function activity()
     {
        return $this->morphMany(Activity::class, 'subject')->latest();
     } 
 
     public function recordActivity($description)
     {
+        
         $this->activity()->create([
+            'user_id' => auth()->user()->id ?? ($this->project ?? $this)->user->id,
             'description' => $description,
             'changes' => $this -> activityChanges($description),
             'project_id' => class_basename($this) === 'Project' ? $this->id : $this->project_id
-        ]);
+            ]); 
+       
     }
+
+    
 
     
 }

@@ -1,3 +1,4 @@
+
 module.exports = {
   prefix: '',
   important: false,
@@ -11,6 +12,11 @@ module.exports = {
       xl: '1280px',
     },
     colors: {
+      default: 'var(--text--default-color)',
+      accent: 'var(--text--accent-color)',
+      'accent-light': 'var(--text-accent-light-color)',
+      muted: 'var(--text--muted-color)',
+      'muted-light': 'var(--text--muted-light-color)',
       transparent: 'transparent',
 
       black: '#000',
@@ -148,7 +154,13 @@ module.exports = {
       '56': '14rem',
       '64': '16rem',
     },
-    backgroundColor: theme => theme('colors'),
+    backgroundColor: theme => ({
+    ...theme('colors'),
+    page:'var(--page--background-color)',
+    card:'var(--card--background-color)',
+    button:'var(--button--background-color)',
+    header:'var(--header--background-color)'
+  }),
     backgroundPosition: {
       bottom: 'bottom',
       center: 'center',
@@ -159,6 +171,12 @@ module.exports = {
       'right-bottom': 'right bottom',
       'right-top': 'right top',
       top: 'top',
+    },
+    backgroundColors:{
+      page:'var(--page-background-color)',
+      card:'var(--card-background-color)',
+      button:'var(--button-background-color)',
+      header:'var(--page-background-color)',
     },
     backgroundSize: {
       auto: 'auto',

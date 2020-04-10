@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-
-
-use App\Http\Requests\UpdateProjectRequest as UpdateProjectRequest;
+use App\Http\Requests\ProjectInvitationRequest;
 use App\Project;
+use App\User;
 use Illuminate\Http\Request;
 
-class ProjectsController extends Controller
+class ProjectsInvitationsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +16,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = auth()->user()->accessibleProjects();
-
-
-        return view('projects.index',compact('projects'));
+        //
     }
 
     /**
@@ -30,29 +26,23 @@ class ProjectsController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        //
     }
 
-    public function validateForms()
-    {
-       return request()->validate([
-            'title'=>'sometimes|required',
-            'description'=>'sometimes|required',
-            'notes' => 'nullable'
-        ]);
-    }
     /**
      * Store a newly created resource in storage.
-     *
+     * 
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Project $project, ProjectInvitationRequest $request)
+    {   
+             
+        $user = User::whereEmail(request('email'))->first();
         
-        $project = auth()->user()->projects()->create($this->validateForms());
-        
-        return redirect($project ->path());
+        $project->invite($user);
+
+        return redirect($project->path());
     }
 
     /**
@@ -63,9 +53,7 @@ class ProjectsController extends Controller
      */
     public function show(Project $project)
     {
-        $this->authorize('userProject',$project);
-
-        return view('projects.show',compact('project'));
+        //
     }
 
     /**
@@ -76,9 +64,7 @@ class ProjectsController extends Controller
      */
     public function edit(Project $project)
     {
-        $this->authorize('userProject',$project);
-
-        return view('projects.edit',compact('project'));
+        //
     }
 
     /**
@@ -88,12 +74,9 @@ class ProjectsController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProjectRequest $request, Project $project)
-    {    
-      
-        $request->save();
-
-        return redirect($project->path());
+    public function update(Request $request, Project $project)
+    {
+        //
     }
 
     /**
@@ -104,10 +87,6 @@ class ProjectsController extends Controller
      */
     public function destroy(Project $project)
     {
-        $this->authorize('manage',$project);
-
-        $project->delete();
-
-        return redirect('/projects');
+        //
     }
 }

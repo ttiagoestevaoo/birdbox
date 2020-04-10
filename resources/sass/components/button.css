@@ -1,0 +1,6 @@
+.button {
+@apply bg-button text-default text-sm font-bold py-2 px-4 rounded shadow-sm;
+}
+.button:hover {
+@apply bg-button;
+}

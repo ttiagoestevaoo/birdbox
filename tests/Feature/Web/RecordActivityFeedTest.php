@@ -51,7 +51,7 @@ class RecordActivityFeedTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $project = ProjectFactory::withTasks(1)->create();
-    ;
+    
         $this->assertCount(2,$project->activity);
 
         tap($project->activity->last(),function ($activity){
@@ -66,8 +66,8 @@ class RecordActivityFeedTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $project = ProjectFactory::withTasks(1)->create();
-        $this->actingAs($this->singIn($project->user))
-        ->patch($project->tasks[0]->path(), [
+        $this->singIn($project->user);
+        $this->patch($project->tasks[0]->path(), [
             'body' => 'Teste',
             'completed' => True
         ]);
@@ -110,4 +110,14 @@ class RecordActivityFeedTest extends TestCase
         $this->assertCount(3,$project->activity);
         
     } 
+
+    /** @test */
+    public function can_see_user_activity_owner()
+    {
+       
+        $project = ProjectFactory::create();
+        
+        $this->assertEquals($project->user, $project->activity[0]->user);
+    }
+    
 }

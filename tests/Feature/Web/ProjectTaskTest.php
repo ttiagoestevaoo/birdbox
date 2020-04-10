@@ -74,10 +74,11 @@ class ProjectTaskTest extends TestCase
     {
         $this-> withoutExceptionHandling();
 
+
         $project = ProjectFactory::withTasks(1)->create();        
 
-        $this->actingAs($project->user)
-        ->patch($project->tasks->first()->path(),[
+        $this->singIn($project->user);
+        $this->patch($project->tasks->first()->path(),[
             'body' => 'changed'
         ]);
         $this->assertDatabaseHas('tasks',[
@@ -92,8 +93,8 @@ class ProjectTaskTest extends TestCase
 
         $project = ProjectFactory::withTasks(1)->create();        
 
-        $this->actingAs($project->user)
-        ->patch($project->tasks->first()->path(),[
+        $this->singIn($project->user);
+        $this->patch($project->tasks->first()->path(),[
             'body' => 'changed',            
             'completed' =>  true
         ]);
@@ -110,8 +111,8 @@ class ProjectTaskTest extends TestCase
 
         $project = ProjectFactory::withTasks(1)->create();        
 
-        $this->actingAs($project->user)
-        ->patch($project->tasks->first()->path(),[
+        $this->singIn($project->user);
+        $this->patch($project->tasks->first()->path(),[
             'body' => 'changed',            
             'completed' =>  false
         ]);
