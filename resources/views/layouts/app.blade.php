@@ -34,7 +34,7 @@
                         </a>
                     </h1>
                     
-                        <div class="">                       
+                        <div class="flex items-center ml-autp">                       
 
                         <!-- Right Side Of Navbar -->
                        
