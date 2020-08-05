@@ -13,3 +13,5 @@ yarn-error.log
 dat
 /database/mysql/*
 mysql
+public/js/app.js
+public/css/app.css
